@@ -1,0 +1,22 @@
+获取大文件显示目录
+git rev-list --objects --all | grep "$(git verify-pack -v .git/objects/pack/*.idx | sort -k 3 -n | tail -5 | awk '{print$1}')"
+删除该文件记录 <file.src> 目录路径
+git filter-branch -f --prune-empty --index-filter 'git rm -rf --cached --ignore-unmatch <file.src>' --tag-name-filter cat -- --all
+重构pack与gc
+rm -rf .git/refs/original/
+git reflog expire --expire=now --all
+git fsck --full --unreachable
+git repack -A -d
+git gc --aggressive --prune=now
+提交
+push force
+
+创建分支 develop(分支名)
+git branch develop
+切换分支
+git checkout develop
+创建并且切换分支
+git checkout -b develop
+
+克隆地址 url 为克隆网址
+git clone url
